@@ -1,1 +1,725 @@
-Notebook[{}]
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     26974,        716]
+NotebookOptionsPosition[     26687,        702]
+NotebookOutlinePosition[     27029,        717]
+CellTagsIndexPosition[     26986,        714]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+  "(*", "***********************************************************************)"}\
+], 
+  RowBox[{"(*", 
+   RowBox[{"Master", "-", 
+    RowBox[{"Slave", " ", "or", " ", "Star", " ", "topology", 
+     RowBox[{"(", "MST", ")"}]}]}], "*)"}], 
+  RowBox[{
+  "(*", "***********************************************************************)"}\
+], 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"In", " ", "MS"}], ",", 
+    RowBox[{
+    "master", " ", "sends", " ", "data", " ", "to", " ", "all", " ", "the", 
+     " ", "slave", " ", "nodes", " ", "at", " ", "once", " ", "and", " ", 
+     "we", " ", "need", " ", "to", " ", "check", " ", "if", " ", "all", " ", 
+     "the", " ", "slave", " ", "nodes", " ", "recieves", " ", "correct", " ", 
+     RowBox[{"data", "!"}]}]}], "*)"}], 
+  RowBox[{
+   RowBox[{"links", "=", 
+    RowBox[{"Table", "[", 
+     RowBox[{
+      RowBox[{"LinkCreate", "[", "]"}], ",", 
+      RowBox[{"{", "4", "}"}]}], "]"}]}], "\n", 
+   RowBox[{"Do", "[", 
+    RowBox[{
+     RowBox[{"Map", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"LinkWrite", "[", 
+         RowBox[{"#", ",", "\"\<sending hey from master !\>\""}], "]"}], 
+        "&"}], ",", "links"}], "]"}], ",", 
+     RowBox[{"{", "2", "}"}]}], "]"}], "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"On", " ", "slave", " ", "nodes"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"Do", "[", 
+    RowBox[{
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"LinkReadyQ", "[", "l1", "]"}], "\[Equal]", "True"}], ",", 
+       RowBox[{"Print", "[", 
+        RowBox[{"LinkRead", "[", "l1", "]"}], "]"}], ",", 
+       RowBox[{"Print", "[", "\"\<ExtraRead !\>\"", "]"}]}], "]"}], ",", 
+     RowBox[{"{", "5", "}"}]}], "]"}], "\n", 
+   RowBox[{"Do", "[", 
+    RowBox[{
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"LinkReadyQ", "[", "l2", "]"}], "\[Equal]", "True"}], ",", 
+       RowBox[{"Print", "[", 
+        RowBox[{"LinkRead", "[", "l2", "]"}], "]"}], ",", 
+       RowBox[{"Print", "[", "\"\<ExtraRead !\>\"", "]"}]}], "]"}], ",", 
+     RowBox[{"{", "5", "}"}]}], "]"}], "\n", 
+   RowBox[{"Do", "[", 
+    RowBox[{
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"LinkReadyQ", "[", "l3", "]"}], "\[Equal]", "True"}], ",", 
+       RowBox[{"Print", "[", 
+        RowBox[{"LinkRead", "[", "l3", "]"}], "]"}], ",", 
+       RowBox[{"Print", "[", "\"\<ExtraRead !\>\"", "]"}]}], "]"}], ",", 
+     RowBox[{"{", "5", "}"}]}], "]"}], "\n", 
+   RowBox[{"Do", "[", 
+    RowBox[{
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"LinkReadyQ", "[", "l4", "]"}], "\[Equal]", "True"}], ",", 
+       RowBox[{"Print", "[", 
+        RowBox[{"LinkRead", "[", "l4", "]"}], "]"}], ",", 
+       RowBox[{"Print", "[", "\"\<ExtraRead !\>\"", "]"}]}], "]"}], ",", 
+     RowBox[{"{", "5", "}"}]}], "]"}], "\[IndentingNewLine]", "\n", 
+   RowBox[{
+   "(*", "***********************************************************************************************************************************)"}\
+], "\[IndentingNewLine]", 
+   RowBox[{"BeginPackage", "[", "\"\<StarTopology`\>\"", "]"}], 
+   RowBox[{"(*", 
+    RowBox[{
+    "Star", " ", "topology", " ", "with", " ", "one", " ", "master", " ", 
+     "and", " ", "four", " ", "slave", " ", "nodes"}], "*)"}], "\n", 
+   "\[IndentingNewLine]", 
+   RowBox[{"Begin", "[", "]"}], "\n", 
+   RowBox[{"links", "=", 
+    RowBox[{"Table", "[", 
+     RowBox[{
+      RowBox[{"LinkLaunch", "[", "\"\<Path to WolframKernel.exe\>\"", "]"}], 
+      ",", 
+      RowBox[{"{", "4", "}"}]}], "]"}]}], "\n", 
+   RowBox[{"(*", 
+    RowBox[{"Writing", " ", "to", " ", "each", " ", "link"}], "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"Map", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"LinkWrite", "[", 
+       RowBox[{"#", ",", "\"\<sending hey from master\>\""}], "]"}], "&"}], 
+     ",", "links"}], "]"}], "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Now", " ", "read", " ", "the", " ", "mesage", " ", "form", " ", "each", 
+     " ", "link"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"While", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"LinkReadyQ", "[", 
+       RowBox[{"links", "[", 
+        RowBox[{"[", "1", "]"}], "]"}], "]"}], "\[Equal]", "True"}], ",", 
+     RowBox[{"Print", "[", 
+      RowBox[{"LinkRead", "[", 
+       RowBox[{"links", "[", 
+        RowBox[{"[", "1", "]"}], "]"}], "]"}], "]"}]}], "]"}], "\n", 
+   "\[IndentingNewLine]", 
+   RowBox[{"While", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"LinkReadyQ", "[", 
+       RowBox[{"links", "[", 
+        RowBox[{"[", "2", "]"}], "]"}], "]"}], "\[Equal]", "True"}], ",", 
+     RowBox[{"Print", "[", 
+      RowBox[{"LinkRead", "[", 
+       RowBox[{"links", "[", 
+        RowBox[{"[", "2", "]"}], "]"}], "]"}], "]"}]}], "]"}], "\n", 
+   "\[IndentingNewLine]", 
+   RowBox[{"While", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"LinkReadyQ", "[", 
+       RowBox[{"links", "[", 
+        RowBox[{"[", "3", "]"}], "]"}], "]"}], "\[Equal]", "True"}], ",", 
+     RowBox[{"Print", "[", 
+      RowBox[{"LinkRead", "[", 
+       RowBox[{"links", "[", 
+        RowBox[{"[", "3", "]"}], "]"}], "]"}], "]"}]}], "]"}], "\n", 
+   "\[IndentingNewLine]", 
+   RowBox[{"While", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"LinkReadyQ", "[", 
+       RowBox[{"links", "[", 
+        RowBox[{"[", "4", "]"}], "]"}], "]"}], "\[Equal]", "True"}], ",", 
+     RowBox[{"Print", "[", 
+      RowBox[{"LinkRead", "[", 
+       RowBox[{"links", "[", 
+        RowBox[{"[", "4", "]"}], "]"}], "]"}], "]"}]}], "]"}], "\n", 
+   "\[IndentingNewLine]", 
+   RowBox[{"End", "[", "]"}], "\n", 
+   RowBox[{"EndPackage", "[", "]"}], "\[IndentingNewLine]", 
+   RowBox[{
+   "(*", "***********************************************************************************************************************************)"}\
+], "\[IndentingNewLine]", 
+   RowBox[{
+   "(*", "***********************************************************************)"}\
+], "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"Serial", " ", "or", " ", "Line", " ", "topology", 
+     RowBox[{"(", "ST", ")"}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+   "(*", "***********************************************************************)"}\
+], "\n", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{"In", " ", "ST"}], ",", 
+     RowBox[{
+     "data", " ", "originates", " ", "from", " ", "source", " ", "node", " ", 
+      "and", " ", "reaches", " ", "to", " ", "another", " ", "node", " ", 
+      "one", " ", "step", " ", "at", " ", "a", " ", "time", " ", "till", " ", 
+      "it", " ", "covers", " ", "all", " ", "the", " ", "nodes"}]}], "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"l", "=", 
+    RowBox[{"LinkCreate", "[", "]"}]}], "\n", 
+   RowBox[{"Do", "[", 
+    RowBox[{
+     RowBox[{"LinkWrite", "[", 
+      RowBox[{"l1", ",", "\"\<Serial message\>\""}], "]"}], ",", 
+     RowBox[{"{", "2", "}"}]}], "]"}], "\[IndentingNewLine]", "\n", 
+   "\[IndentingNewLine]", 
+   RowBox[{"Do", "[", 
+    RowBox[{
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"LinkReadyQ", "[", "l1Rec", "]"}], "\[Equal]", "True"}], ",", 
+       RowBox[{
+        RowBox[{"s", "=", 
+         RowBox[{"LinkRead", "[", "l1Rec", "]"}]}], ";", 
+        RowBox[{"Print", "[", "s", "]"}], ";", "\[IndentingNewLine]", 
+        RowBox[{"LinkWrite", "[", 
+         RowBox[{"l1Send", ",", "s"}], "]"}]}], ",", 
+       RowBox[{"Print", "[", "\"\<Extra Read\>\"", "]"}]}], "]"}], ",", 
+     RowBox[{"{", "3", "}"}]}], "]"}], "\n", 
+   RowBox[{"Do", "[", 
+    RowBox[{
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"LinkReadyQ", "[", "l2Rec", "]"}], "\[Equal]", "True"}], ",", 
+       RowBox[{
+        RowBox[{"s", "=", 
+         RowBox[{"LinkRead", "[", "l2Rec", "]"}]}], ";", 
+        RowBox[{"Print", "[", "s", "]"}], ";", "\[IndentingNewLine]", 
+        RowBox[{"LinkWrite", "[", 
+         RowBox[{"l2Send", ",", "s"}], "]"}]}], ",", 
+       RowBox[{"Print", "[", "\"\<Extra Read\>\"", "]"}]}], "]"}], ",", 
+     RowBox[{"{", "3", "}"}]}], "]"}], "\n", 
+   RowBox[{"Do", "[", 
+    RowBox[{
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"LinkReadyQ", "[", "l3Rec", "]"}], "\[Equal]", "True"}], ",", 
+       RowBox[{
+        RowBox[{"s", "=", 
+         RowBox[{"LinkRead", "[", "l3Rec", "]"}]}], ";", 
+        RowBox[{"Print", "[", "s", "]"}]}], ",", 
+       RowBox[{"Print", "[", "\"\<Extra Read\>\"", "]"}]}], "]"}], ",", 
+     RowBox[{"{", "3", "}"}]}], "]"}], "\n", 
+   RowBox[{"Do", "[", 
+    RowBox[{
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"LinkReadyQ", "[", "l4Rec", "]"}], "\[Equal]", "True"}], ",", 
+       RowBox[{"Print", "[", 
+        RowBox[{"LinkRead", "[", "l4Rec", "]"}], "]"}], ",", 
+       RowBox[{"Print", "[", "\"\<Extra Read\>\"", "]"}]}], "]"}], ",", 
+     RowBox[{"{", "3", "}"}]}], "]"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{"**", "**", "**", "**", "**", "**", "**", "**"}], "*", "Sending",
+      " ", "the", " ", "write", " ", "command", " ", "as", " ", "part", " ", 
+     "of", " ", "the", " ", "data"}], "************)"}], "\n", 
+   RowBox[{"(*", 
+    RowBox[{"On", " ", "first", " ", "node"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"LinkWrite", "[", 
+    RowBox[{"l1", ",", 
+     RowBox[{"Unevaluated", "@", 
+      RowBox[{"LinkWrite", "[", 
+       RowBox[{"l2Send", ",", "\"\<Data\>\""}], "]"}]}]}], "]"}], "\n", 
+   RowBox[{"(*", 
+    RowBox[{"On", " ", "second", " ", "node"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"If", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"LinkReadyQ", "[", "l2Rec", "]"}], "\[Equal]", "True"}], ",", 
+     RowBox[{"LinkRead", "[", "l2Rec", "]"}], ",", 
+     RowBox[{"Print", "[", "\"\<Extra Read\>\"", "]"}]}], "]"}], "\n", 
+   RowBox[{"(*", 
+    RowBox[{"On", " ", "third", " ", "node"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"If", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"LinkReadyQ", "[", "l2Rec", "]"}], "\[Equal]", "True"}], ",", 
+     RowBox[{"LinkRead", "[", "l2Rec", "]"}], ",", 
+     RowBox[{"Print", "[", "\"\<Extra Read\>\"", "]"}]}], "]"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+   "(*", "***********************************************************************)"}\
+], "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"Ring", " ", "Topology", " ", "RT"}], "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "RT", " ", "is", " ", "same", " ", "as", " ", "ST", " ", "the", " ", 
+     "only", " ", "difference", " ", "is", " ", "last", " ", "node", " ", 
+     "is", " ", "connected", " ", "to", " ", "first", " ", "node", " ", "to", 
+     " ", "make", " ", "a", " ", "circular", " ", "or", " ", "ring", " ", 
+     "connection"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "In", " ", "the", " ", "following", " ", "operation", " ", "node", " ", 
+     "1", " ", "sends", " ", "message", " ", "to", " ", "its", " ", 
+     "adjacent", " ", "node", " ", "and", " ", "the", " ", "message", " ", 
+     "circulates", " ", "the", " ", "ring", " ", "six", " ", "times"}], 
+    "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+   "(*", "***********************************************************************)"}\
+], "\n", 
+   RowBox[{"(*", 
+    RowBox[{"On", " ", "node", " ", "1"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"l1Send", "=", 
+    RowBox[{"LinkCreate", "[", "]"}]}], "\n", 
+   RowBox[{"l1Rec", "=", 
+    RowBox[{"LinkConnect", "[", "\"\<g499f_shm\>\"", "]"}]}], "\n", 
+   RowBox[{"LinkWrite", "[", 
+    RowBox[{"l1Send", ",", "\"\<Ring Data\>\""}], "]"}], "\n", 
+   "\[IndentingNewLine]", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"count", "=", "6"}], "}"}], ",", 
+     RowBox[{
+      RowBox[{"LinkWrite", "[", 
+       RowBox[{"l1Send", ",", "\"\<Ring Data\>\""}], "]"}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"While", "[", 
+       RowBox[{"True", ",", 
+        RowBox[{
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{"count", "\[Equal]", "0"}], ",", 
+           RowBox[{
+            RowBox[{"If", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"LinkReadyQ", "[", "l1Rec", "]"}], "\[Equal]", 
+               "True"}], ",", 
+              RowBox[{"LinkRead", "[", "l1Rec", "]"}]}], "]"}], ";", 
+            RowBox[{"Break", "[", "]"}]}], ",", "Null"}], "]"}], ";", 
+         "\[IndentingNewLine]", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"count", ">", "0"}], "&&", 
+            RowBox[{
+             RowBox[{"LinkReadyQ", "[", "l1Rec", "]"}], "\[Equal]", 
+             "True"}]}], ",", 
+           RowBox[{
+            RowBox[{"s", "=", 
+             RowBox[{"LinkRead", "[", "l1Rec", "]"}]}], ";", 
+            RowBox[{"Print", "[", "s", "]"}], ";", 
+            RowBox[{"count", "-=", "1"}], ";", "\[IndentingNewLine]", 
+            RowBox[{"LinkWrite", "[", 
+             RowBox[{"l1Send", ",", "s"}], "]"}]}], ",", "Null"}], "]"}]}]}], 
+       "]"}]}]}], "]"}], "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"On", " ", "node2"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"l2Send", "=", 
+    RowBox[{"LinkCreate", "[", "]"}]}], "\n", 
+   RowBox[{"l2Rec", "=", 
+    RowBox[{"LinkConnect", "[", "\"\<257fw_shm\>\"", "]"}]}], "\n", 
+   "\[IndentingNewLine]", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"count", "=", "6"}], "}"}], ",", 
+     RowBox[{"While", "[", 
+      RowBox[{"True", ",", 
+       RowBox[{
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{"count", "\[Equal]", "0"}], ",", 
+          RowBox[{
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"LinkReadyQ", "[", "l2Rec", "]"}], "\[Equal]", "True"}],
+              ",", 
+             RowBox[{"LinkRead", "[", "l2Rec", "]"}]}], "]"}], ";", 
+           RowBox[{"Break", "[", "]"}]}], ",", "Null"}], "]"}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"count", ">", "0"}], "&&", 
+           RowBox[{
+            RowBox[{"LinkReadyQ", "[", "l2Rec", "]"}], "\[Equal]", "True"}]}],
+           ",", 
+          RowBox[{
+           RowBox[{"s", "=", 
+            RowBox[{"LinkRead", "[", "l2Rec", "]"}]}], ";", 
+           RowBox[{"Print", "[", "s", "]"}], ";", 
+           RowBox[{"count", "-=", "1"}], ";", "\[IndentingNewLine]", 
+           RowBox[{"LinkWrite", "[", 
+            RowBox[{"l2Send", ",", "s"}], "]"}]}], ",", "Null"}], "]"}]}]}], 
+      "]"}]}], "]"}], "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"Node", " ", "3"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"l3Send", "=", 
+    RowBox[{"LinkCreate", "[", "]"}]}], "\n", 
+   RowBox[{"l3Rec", "=", 
+    RowBox[{"LinkConnect", "[", "\"\<bzf23_shm\>\"", "]"}]}], "\n", 
+   "\[IndentingNewLine]", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"count", "=", "6"}], "}"}], ",", 
+     RowBox[{"While", "[", 
+      RowBox[{"True", ",", 
+       RowBox[{
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{"count", "\[Equal]", "0"}], ",", 
+          RowBox[{
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"LinkReadyQ", "[", "l3Rec", "]"}], "\[Equal]", "True"}],
+              ",", 
+             RowBox[{"LinkRead", "[", "l3Rec", "]"}]}], "]"}], ";", 
+           RowBox[{"Break", "[", "]"}]}], ",", "Null"}], "]"}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"count", ">", "0"}], "&&", 
+           RowBox[{
+            RowBox[{"LinkReadyQ", "[", "l3Rec", "]"}], "\[Equal]", "True"}]}],
+           ",", 
+          RowBox[{
+           RowBox[{"s", "=", 
+            RowBox[{"LinkRead", "[", "l3Rec", "]"}]}], ";", 
+           RowBox[{"Print", "[", "s", "]"}], ";", 
+           RowBox[{"count", "-=", "1"}], ";", "\[IndentingNewLine]", 
+           RowBox[{"LinkWrite", "[", 
+            RowBox[{"l3Send", ",", "s"}], "]"}]}], ",", "Null"}], "]"}]}]}], 
+      "]"}]}], "]"}], "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"Node", " ", "4"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"l4Send", "=", 
+    RowBox[{"LinkCreate", "[", "]"}]}], "\n", 
+   RowBox[{"l4Rec", "=", 
+    RowBox[{"LinkConnect", "[", "\"\<ar7ub_shm\>\"", "]"}]}], "\n", 
+   "\[IndentingNewLine]", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"count", "=", "6"}], "}"}], ",", 
+     RowBox[{"While", "[", 
+      RowBox[{"True", ",", 
+       RowBox[{
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{"count", "\[Equal]", "0"}], ",", 
+          RowBox[{
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"LinkReadyQ", "[", "l4Rec", "]"}], "\[Equal]", "True"}],
+              ",", 
+             RowBox[{"LinkRead", "[", "l4Rec", "]"}]}], "]"}], ";", 
+           RowBox[{"Break", "[", "]"}]}], ",", "Null"}], "]"}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"count", ">", "0"}], "&&", 
+           RowBox[{
+            RowBox[{"LinkReadyQ", "[", "l4Rec", "]"}], "\[Equal]", "True"}]}],
+           ",", 
+          RowBox[{
+           RowBox[{"s", "=", 
+            RowBox[{"LinkRead", "[", "l4Rec", "]"}]}], ";", 
+           RowBox[{"Print", "[", "s", "]"}], ";", 
+           RowBox[{"count", "-=", "1"}], ";", "\[IndentingNewLine]", 
+           RowBox[{"LinkWrite", "[", 
+            RowBox[{"l4Send", ",", "s"}], "]"}]}], ",", "Null"}], "]"}]}]}], 
+      "]"}]}], "]"}], "\n"}]}]], "Input",
+ CellChangeTimes->{{3.639845675047997*^9, 3.6398456750499973`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+  "(*", "***********************************************************************)"}\
+], 
+  RowBox[{"(*", 
+   RowBox[{"Tree", " ", "Topology"}], "*)"}], 
+  RowBox[{
+  "(*", "***********************************************************************)"}\
+], 
+  RowBox[{"(*", 
+   RowBox[{"On", " ", "root", " ", "node"}], "*)"}], 
+  RowBox[{
+   RowBox[{
+    RowBox[{"lRoot", "[", "]"}], "=", 
+    RowBox[{"Table", "[", 
+     RowBox[{
+      RowBox[{"LinkCreate", "[", "]"}], ",", 
+      RowBox[{"{", "2", "}"}]}], "]"}]}], "\n", "\[IndentingNewLine]", 
+   RowBox[{"Do", "[", 
+    RowBox[{
+     RowBox[{"Map", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"LinkWrite", "[", 
+         RowBox[{"#", ",", "\"\<Data from root\>\""}], "]"}], "&"}], ",", 
+       "lRoot"}], "]"}], ",", 
+     RowBox[{"{", "2", "}"}]}], "]"}], "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"On", " ", "intermediate", " ", "node", " ", "1"}], "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"l1Int1Rec", "=", 
+    RowBox[{"LinkConnect", "[", "\"\<link to the root\>\"", "]"}]}], "\n", 
+   RowBox[{"l1Int1Send", "=", 
+    RowBox[{"LinkCreate", "[", "]"}]}], "\n", 
+   RowBox[{"l2Int1Send", "=", 
+    RowBox[{"LinkCreate", "[", "]"}]}], "\n", "\[IndentingNewLine]", 
+   RowBox[{"Do", "[", 
+    RowBox[{
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"LinkReadyQ", "[", "l1Int1Rec", "]"}], "\[Equal]", "True"}], 
+       ",", 
+       RowBox[{
+        RowBox[{"s", "=", 
+         RowBox[{"LinkRead", "[", "l1Int1Rec", "]"}]}], ";", 
+        RowBox[{"LinkWrite", "[", 
+         RowBox[{"l1Int1Send", ",", "s"}], "]"}], ";", 
+        RowBox[{"LinkWrite", "[", 
+         RowBox[{"l2Int1Send", ",", "s"}], "]"}]}], ",", "Null"}], "]"}], ",", 
+     RowBox[{"{", "2", "}"}]}], "]"}], "\n", 
+   RowBox[{"(*", 
+    RowBox[{"On", " ", "intermediate", " ", "node", " ", "2"}], "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"l1Int2Rec", "=", 
+    RowBox[{"LinkConnect", "[", "\"\<link to the root\>\"", "]"}]}], "\n", 
+   RowBox[{"l1Int2Send", "=", 
+    RowBox[{"LinkCreate", "[", "]"}]}], "\n", "\[IndentingNewLine]", 
+   RowBox[{"Do", "[", 
+    RowBox[{
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"LinkReadyQ", "[", "l1Int2Rec", "]"}], "\[Equal]", "True"}], 
+       ",", 
+       RowBox[{
+        RowBox[{"s", "=", 
+         RowBox[{"LinkRead", "[", "l1Int2Rec", "]"}]}], ";", 
+        RowBox[{"LinkWrite", "[", 
+         RowBox[{"l1Int2Send", ",", "s"}], "]"}]}], ",", "Null"}], "]"}], ",", 
+     RowBox[{"{", "2", "}"}]}], "]"}], "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"On", " ", "leaf", " ", "nodes"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"l1Leaf1Rec", "=", 
+    RowBox[{"LinkConnect", "[", "\"\<link to Int1\>\"", "]"}]}], "\n", 
+   RowBox[{"l1Leaf2Rec", "=", 
+    RowBox[{"LinkConnect", "[", "\"\<link to Int1\>\"", "]"}]}], "\n", 
+   RowBox[{"l1Leaf3Rec", "=", 
+    RowBox[{"LinkConnect", "[", "\"\<link to Int2\>\"", "]"}]}], "\n", 
+   "\[IndentingNewLine]", 
+   RowBox[{"Do", "[", 
+    RowBox[{
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"LinkReadyQ", "[", "l1Leaf1Rec", "]"}], "\[Equal]", "True"}], 
+       ",", 
+       RowBox[{"Print", "[", 
+        RowBox[{"LinkRead", "[", "l1Leaf1Rec", "]"}], "]"}], ",", "Null"}], 
+      "]"}], ",", 
+     RowBox[{"{", "2", "}"}]}], "]"}], "\n", 
+   RowBox[{"Do", "[", 
+    RowBox[{
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"LinkReadyQ", "[", "l1Leaf2Rec", "]"}], "\[Equal]", "True"}], 
+       ",", 
+       RowBox[{"Print", "[", 
+        RowBox[{"LinkRead", "[", "l1Leaf2Rec", "]"}], "]"}], ",", "Null"}], 
+      "]"}], ",", 
+     RowBox[{"{", "2", "}"}]}], "]"}], "\n", 
+   RowBox[{"Do", "[", 
+    RowBox[{
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"LinkReadyQ", "[", "l1Leaf3Rec", "]"}], "\[Equal]", "True"}], 
+       ",", 
+       RowBox[{"Print", "[", 
+        RowBox[{"LinkRead", "[", "l1Leaf3Rec", "]"}], "]"}], ",", "Null"}], 
+      "]"}], ",", 
+     RowBox[{"{", "2", "}"}]}], "]"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{
+   "(*", "***********************************************************************)"}\
+], "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Fully", " ", "connected", " ", "network", " ", "with", " ", "six", " ", 
+     "nodes"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+   "(*", "***********************************************************************)"}\
+], "\n", 
+   RowBox[{"(*", 
+    RowBox[{"On", " ", "node", " ", "1"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"allinks", "=", 
+    RowBox[{"Table", "[", 
+     RowBox[{
+      RowBox[{"LinkCreate", "[", "]"}], ",", 
+      RowBox[{"{", "5", "}"}]}], "]"}]}], "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"On", " ", "Node", " ", "2"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"links", "=", 
+    RowBox[{"Table", "[", 
+     RowBox[{
+      RowBox[{"LinkCreate", "[", "]"}], ",", 
+      RowBox[{"{", "4", "}"}]}], "]"}]}], "\n", 
+   RowBox[{"l12", "=", 
+    RowBox[{"LinkConnect", "[", "]"}]}], "\n", 
+   RowBox[{"allLinks", "=", 
+    RowBox[{"AppendTo", "[", 
+     RowBox[{"links", ",", "l12"}], "]"}]}], "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"On", " ", "Node", " ", "3"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"links", "=", 
+    RowBox[{"Table", "[", 
+     RowBox[{
+      RowBox[{"LinkCreate", "[", "]"}], ",", 
+      RowBox[{"{", "3", "}"}]}], "]"}]}], "\n", 
+   RowBox[{"l13", "=", 
+    RowBox[{"LinkConnect", "[", "]"}]}], "\n", 
+   RowBox[{"l23", "=", 
+    RowBox[{"LinkConnect", "[", "]"}]}], "\n", 
+   RowBox[{"allLinks", "=", 
+    RowBox[{"AppendTo", "[", 
+     RowBox[{"links", ",", 
+      RowBox[{"{", 
+       RowBox[{"l13", ",", "l23"}], "}"}]}], "]"}]}], "\[IndentingNewLine]", 
+   "\n", 
+   RowBox[{"(*", 
+    RowBox[{"On", " ", "Node", " ", "4"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"links", "=", 
+    RowBox[{"Table", "[", 
+     RowBox[{
+      RowBox[{"LinkCreate", "[", "]"}], ",", 
+      RowBox[{"{", "2", "}"}]}], "]"}]}], "\n", 
+   RowBox[{"l14", "=", 
+    RowBox[{"LinkConnect", "[", "]"}]}], "\n", 
+   RowBox[{"l24", "=", 
+    RowBox[{"LinkConnect", "[", "]"}]}], "\n", 
+   RowBox[{"l34", "=", 
+    RowBox[{"LinkConnect", "[", "]"}]}], "\n", 
+   RowBox[{"allLinks", "=", 
+    RowBox[{"AppendTo", "[", 
+     RowBox[{"links", ",", 
+      RowBox[{"{", 
+       RowBox[{"l14", ",", "l24", ",", "l34"}], "}"}]}], "]"}]}], 
+   "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"On", " ", "Node", " ", "5"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"links", "=", 
+    RowBox[{"Table", "[", 
+     RowBox[{
+      RowBox[{"LinkCreate", "[", "]"}], ",", 
+      RowBox[{"{", "1", "}"}]}], "]"}]}], "\n", 
+   RowBox[{"l15", "=", 
+    RowBox[{"LinkConnect", "[", "]"}]}], "\n", 
+   RowBox[{"l25", "=", 
+    RowBox[{"LinkConnect", "[", "]"}]}], "\n", 
+   RowBox[{"l35", "=", 
+    RowBox[{"LinkConnect", "[", "]"}]}], "\n", 
+   RowBox[{"l45", "=", 
+    RowBox[{"LinkConnect", "[", "]"}]}], "\n", 
+   RowBox[{"allLinks", "=", 
+    RowBox[{"AppendTo", "[", 
+     RowBox[{"links", ",", 
+      RowBox[{"{", 
+       RowBox[{"l15", ",", "l25", ",", "l35", ",", "l45"}], "}"}]}], "]"}]}], 
+   "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{"On", " ", "Node", " ", "6"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"l16", "=", 
+    RowBox[{"LinkConnect", "[", "]"}]}], "\n", 
+   RowBox[{"l26", "=", 
+    RowBox[{"LinkConnect", "[", "]"}]}], "\n", 
+   RowBox[{"l36", "=", 
+    RowBox[{"LinkConnect", "[", "]"}]}], "\n", 
+   RowBox[{"l46", "=", 
+    RowBox[{"LinkConnect", "[", "]"}]}], "\n", 
+   RowBox[{"l56", "=", 
+    RowBox[{"LinkConnect", "[", "]"}]}], "\n", 
+   RowBox[{"l", "=", 
+    RowBox[{"List", "[", 
+     RowBox[{"l16", ",", "l26", ",", "l36", ",", "l46", ",", "l56"}], "]"}]}],
+    "\n", "\[IndentingNewLine]", 
+   RowBox[{"Map", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"LinkWrite", "[", 
+       RowBox[{"#", ",", "\"\<Send Data\>\""}], "]"}], "&"}], ",", "l"}], 
+    "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.6398457596524286`*^9, 3.6398457596524286`*^9}}]
+},
+WindowSize->{775, 873},
+WindowMargins->{{Automatic, -1178}, {2, Automatic}},
+FrontEndVersion->"10.1 for Microsoft Windows (64-bit) (May 4, 2015)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 17922, 455, 2412, "Input"],
+Cell[18483, 477, 8200, 223, 1452, "Input"]
+}
+]
+*)
+
+(* End of internal cache information *)
