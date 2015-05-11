@@ -9,6 +9,11 @@ StarTopology::usage = "StarTopology[n] consists of one master node and n slave n
 LineTopology::usage = "LineTopology[n] consists of n nodes connected in series"
 TreeTopology::usage = "TreeTopology[n] contains a complete binary tree of height n"
 
+(*Auxiliary functions*)
+LaunchSerialLinks::usage = "LaunchSerialLinks[currentNode,totalNodes] opens subsidiary wolfram kernel if value of currentNode is less than totalNodes"
+SendSerialData::usage = "SendSerialData[data,currentNode,totalNode] forwards the data to next serial node"
+
+
 Begin["`Private`"] (* Begin Private Context *)
 
 StarTopology[slaveCount_]:= Module[{mylinks},
@@ -35,11 +40,11 @@ LineTopology[nodeCount_]:= Module[{link,count=2},
 		
 		(**************Send data from node 1*******************************)
 		Print["Sending Data"];
-		LinkWrite[link,Unevaluated@EvaluatePacket[SendSerialData["Data from node 1",2,nodeCount]]];
+		LinkWrite[link,Unevaluated@Evaluate[SendSerialData["Data from node 1",2,nodeCount]]];
 		Pause[2];
 
 		
-		(******************Now Retrieve the data***************************)
+		(*******************Now Retrieve the data***************************)
 		Print["Reading Data"];
 		While[count<nodeCount,
 			LinkWrite[link,Unevaluated@EvaluatePacket[SendSerialData[Evaluate[ReceiveData[link]],2,nodeCount-count]]];
@@ -101,8 +106,8 @@ TreeTopology[height_] := Module[{mylinks,count=2},
 ]
 
 (*Auxiliary function*)
-LaunchChildLinks[currentLevel_,height_] := 
-	if[currentLevel < height,
+LaunchChildLinks[currentLevel_,height_] :=
+	If[currentLevel < height,
 		links = Table[LinkLaunch[First[$CommandLine]<> " -wstp"],{2}];
 		Map[LinkWrite[#,Unevaluated@Evaluate[LaunchChildLinks[currentLevel+1,height]]]&,links];
 		Pause[2]
@@ -110,14 +115,19 @@ LaunchChildLinks[currentLevel_,height_] :=
 	]
 
 (*Auxiliary function*)
-LaunchSerialLinks[currentNode_,totalNodes_] := 
-		if[currentNodes < totalNodes,
+LaunchSerialLinks[currentNode_,totalNodes_] := Module[{},
+	(
+		Get["/home/daman/git/MathematicaPrograms/MathLinkTopologies/MathLink/Kernel/MathLinkTopologies.m"];
+		If[currentNode < totalNodes,
+			Print["Launching Kernel " currentNode];
 			link =  LinkLaunch[First[$CommandLine]<> " -wstp"];
+			Print["LinkLaunch executed!!!"];
 			(*Create a forward link*)
 			LinkWrite[link,Unevaluated@Evaluate[LaunchSerialLinks[currentNode+1,totalNodes]]];
-			Pause[2];
-			,Null
+			Print["LinkWrite executed!!!"]
 		 ]
+	)
+]
 
 (*Auxiliary function*)
 ReceiveData[link_] := Module[{},
@@ -128,16 +138,20 @@ ReceiveData[link_] := Module[{},
 ]
 
 (*Auxiliary function*)
-SendSerialData[data_,currentNode_,totalNodes_] :=
-	if[currentNodes < totalNodes,
-		LinkWrite[link,Unevaluated@Evaluate[SendSerialData[data,currentNode+1,totalNodes]]];
-		Pause[2];
-		,data
-	]
+SendSerialData[data_,currentNode_,totalNodes_] := Module[{},
+	(
+		Get["/home/daman/git/MathematicaPrograms/MathLinkTopologies/MathLink/Kernel/MathLinkTopologies.m"];
+		If[currentNode < totalNodes,
+			LinkWrite[link,Unevaluated@Evaluate[SendSerialData[data,currentNode+1,totalNodes]]];
+			Pause[2];
+			,data
+		]
+	)
+]
 
 (*Auxiliary function*)
 SendTreeData[data_,currentlevel_,height_] :=
-	if[currentlevel < height,
+	If[currentlevel < height,
 		Map[LinkWrite[#,Unevaluated@Evaluate[SendTreeData[data,currentlevel+1,height]]]&,links];
 		Pause[2];
 		,data
