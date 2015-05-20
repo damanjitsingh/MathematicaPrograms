@@ -1,0 +1,165 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      5208,        156]
+NotebookOptionsPosition[      4465,        125]
+NotebookOutlinePosition[      4799,        140]
+CellTagsIndexPosition[      4756,        137]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"PrimePowerPi", "[", "x_", "]"}], " ", ":=", " ", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"i", "=", "2"}], ",", 
+      RowBox[{"count", "=", "0"}]}], "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"While", "[", 
+      RowBox[{
+       RowBox[{"i", "\[LessEqual]", "x"}], ",", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{"PrimePowerQ", "[", "i", "]"}], ",", 
+          RowBox[{"count", "++"}], ",", "Null"}], "]"}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"i", "++"}], ";"}]}], "\[IndentingNewLine]", "]"}], ";", 
+     "\[IndentingNewLine]", "count"}]}], "\[IndentingNewLine]", 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.64108236668904*^9, 3.6410825934024343`*^9}, {
+  3.641082670144541*^9, 3.641082694301689*^9}, {3.641082727294902*^9, 
+  3.641082770614149*^9}, {3.641082844218392*^9, 3.6410829033069687`*^9}, {
+  3.641082968602964*^9, 3.64108303377824*^9}, {3.641083080398634*^9, 
+  3.641083218212976*^9}, {3.641083284111411*^9, 3.6410832982167473`*^9}, {
+  3.641083361605701*^9, 3.6410833634980164`*^9}, {3.641083408527491*^9, 
+  3.641083445990788*^9}, {3.6410835832869377`*^9, 3.641083583711564*^9}, {
+  3.6410846207787237`*^9, 3.641084655230842*^9}, {3.641084790326459*^9, 
+  3.641084800805565*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"PrimePowerPi", "[", "1000000", "]"}]], "Input",
+ CellChangeTimes->{{3.641082609979084*^9, 3.6410826215655212`*^9}, {
+  3.641083525151154*^9, 3.6410835341074047`*^9}, {3.641083617064987*^9, 
+  3.641083630170416*^9}, {3.641084066761664*^9, 3.641084068876096*^9}, {
+  3.641084726465144*^9, 3.641084727382153*^9}, {3.641084779660775*^9, 
+  3.641084780008586*^9}, {3.64108486632297*^9, 3.641084866931003*^9}}],
+
+Cell[BoxData["78734"], "Output",
+ CellChangeTimes->{{3.641083101800774*^9, 3.6410831243845043`*^9}, {
+   3.641083155400069*^9, 3.64108317935471*^9}, 3.64108322522427*^9, 
+   3.641083302606373*^9, 3.641083368599546*^9, 3.641083443578556*^9, {
+   3.641083536752574*^9, 3.641083558736641*^9}, {3.641083590567707*^9, 
+   3.641083624128333*^9}, 3.6410836681617107`*^9, {3.641084078693777*^9, 
+   3.6410840922592487`*^9}, 3.64108473506524*^9, {3.641084767121455*^9, 
+   3.641084805560149*^9}, 3.641084881958889*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"PrimePi", "[", "1000000000", "]"}]], "Input",
+ CellChangeTimes->{{3.641085167767219*^9, 3.641085195261499*^9}, {
+  3.6410854222172117`*^9, 3.641085433979444*^9}}],
+
+Cell[BoxData["50847534"], "Output",
+ CellChangeTimes->{{3.641085178449881*^9, 3.641085196917445*^9}, 
+   3.641085438360099*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"PrimePowerPiFast", "[", "x_", "]"}], ":=", " ", 
+  RowBox[{"Count", "[", 
+   RowBox[{
+    RowBox[{"Map", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"PrimePowerQ", "[", "#", "]"}], "&"}], ",", 
+      RowBox[{"Range", "[", 
+       RowBox[{"2", ",", "x"}], "]"}]}], "]"}], ",", "True"}], 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.6410859541711493`*^9, 3.641086105974434*^9}, {
+  3.641086256937763*^9, 3.6410862573093233`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"PrimePowerPiFast", "[", "20", "]"}]], "Input",
+ CellChangeTimes->{{3.641086078003974*^9, 3.6410860842432213`*^9}}],
+
+Cell[BoxData["12"], "Output",
+ CellChangeTimes->{{3.641086085299008*^9, 3.6410861105700207`*^9}, 
+   3.641086262026589*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"PrimePowerPiFast", "[", "10000000", "]"}]], "Input",
+ CellChangeTimes->{{3.641086114650865*^9, 3.641086125489552*^9}, 
+   3.6410863382223883`*^9}],
+
+Cell[BoxData["665134"], "Output",
+ CellChangeTimes->{3.641086134105212*^9, 3.641086271189674*^9, 
+  3.641086422037609*^9}]
+}, Open  ]],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.6410862440549307`*^9, 3.641086253793647*^9}}]
+},
+WindowSize->{1301, 744},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+FrontEndVersion->"10.1 for Linux x86 (64-bit) (March 23, 2015)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 1372, 30, 165, "Input"],
+Cell[CellGroupData[{
+Cell[1955, 54, 428, 6, 32, "Input"],
+Cell[2386, 62, 509, 7, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2932, 74, 186, 3, 32, "Input"],
+Cell[3121, 79, 127, 2, 32, "Output"]
+}, Open  ]],
+Cell[3263, 84, 468, 13, 32, "Input"],
+Cell[CellGroupData[{
+Cell[3756, 101, 138, 2, 32, "Input"],
+Cell[3897, 105, 123, 2, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[4057, 112, 170, 3, 32, "Input"],
+Cell[4230, 117, 122, 2, 65, "Output"]
+}, Open  ]],
+Cell[4367, 122, 94, 1, 32, "Input"]
+}
+]
+*)
+
+(* End of internal cache information *)
